@@ -148,6 +148,6 @@ const AuthForm = ({ mode = "login" }) => {
 export default AuthForm;
 
 const initialValues = {
-  username: "wevs",
-  password: "sample",
+  username: "",
+  password: "",
 };
