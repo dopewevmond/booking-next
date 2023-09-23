@@ -2,8 +2,6 @@
 import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { bookValidationSchema as validationSchema } from "@/lib/validationSchema";
-import { Toast } from "flowbite-react";
-import { HiX } from "react-icons/hi";
 import StatusCard from "./StatusCard";
 
 const AddGuest = () => {
@@ -37,17 +35,7 @@ const AddGuest = () => {
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
-      {error && (
-        <Toast className="flex w-fit items-center justify-center p-2 fixed top-4 right-0 left-0 mx-auto">
-          <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
-            <HiX className="h-5 w-5" />
-          </div>
-          <div className="ml-3 text-sm font-normal">{error}</div>
-          <Toast.Toggle />
-        </Toast>
-      )}
-
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:min-h-screen lg:py-16">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-16">
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-4">
