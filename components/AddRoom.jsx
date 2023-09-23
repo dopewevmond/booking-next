@@ -3,8 +3,8 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import { roomValidationSchema as validationSchema } from "@/lib/validationSchema";
 import LoadingSpinner from "./LoadingSpinner";
-import { Toast } from "flowbite-react";
-import { HiCheck, HiX } from "react-icons/hi";
+import StatusCard from "./StatusCard";
+import Link from "next/link";
 
 const AddRoomForm = () => {
   const [error, setError] = useState(null);
@@ -23,7 +23,6 @@ const AddRoomForm = () => {
         });
         if (res.status !== 201) throw new Error("Unable to add room");
         setSuccess(true);
-        if (window) window.location.reload();
       } catch (err) {
         console.log(err);
         setError(err.message ?? "Unable to add room");
@@ -34,26 +33,29 @@ const AddRoomForm = () => {
   });
 
   const handleGenderButtons = (e) => (formik.values.gender = e.target.value);
+
+  if (error) {
+    return (
+      <StatusCard
+        status="error"
+        heading="Unable to add room"
+        message="Please click on Continue to reload and try again"
+      />
+    );
+  }
+
+  if (success) {
+    return (
+      <StatusCard
+        status="success"
+        heading="Room added successfully"
+        message="Please click on Continue to add more rooms"
+      />
+    );
+  }
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
-      {error && (
-        <Toast className="flex w-fit items-center justify-center p-2 absolute top-4 right-0 left-0 mx-auto">
-          <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
-            <HiX className="h-5 w-5" />
-          </div>
-          <div className="ml-3 text-sm font-normal">{error}</div>
-          <Toast.Toggle />
-        </Toast>
-      )}
-      {success && (
-        <Toast className="flex w-fit items-center justify-center p-2 absolute top-4 right-0 left-0 mx-auto">
-          <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
-            <HiCheck className="h-5 w-5" />
-          </div>
-          <div className="ml-3 text-sm font-normal">Room added successfully</div>
-          <Toast.Toggle />
-        </Toast>
-      )}
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 sm:p-8">
@@ -154,6 +156,11 @@ const AddRoomForm = () => {
                 {formik.isSubmitting ? "Adding room" : "Add room"}
               </button>
             </form>
+
+            <p className="block mt-4 text-sm font-medium text-gray-900 dark:text-white">
+              Want to generate codes instead? Click{" "}
+              <Link href="/get-code" className="text-blue-400 hover:text-blue-300 transition-colors">here</Link>
+            </p>
           </div>
         </div>
       </div>

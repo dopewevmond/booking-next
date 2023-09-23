@@ -6,6 +6,7 @@ import { HiX } from "react-icons/hi";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { authValidationSchema as validationSchema } from "@/lib/validationSchema";
+import Link from "next/link";
 
 const AuthForm = ({ mode = "login" }) => {
   const router = useRouter();
@@ -137,6 +138,28 @@ const AuthForm = ({ mode = "login" }) => {
                   </span>
                 </button>
               </form>
+
+              {mode === "login" ? (
+                <p className="block mt-4 text-sm font-medium text-gray-900 dark:text-white">
+                  Don&apos;t already have an account?{" "}
+                  <Link
+                    href="/signup"
+                    className="text-blue-400 hover:text-blue-300 transition-colors"
+                  >
+                    Sign up
+                  </Link>
+                </p>
+              ) : (
+                <p className="block mt-4 text-sm font-medium text-gray-900 dark:text-white">
+                  Already have an account?{" "}
+                  <Link
+                    href="/login"
+                    className="text-blue-400 hover:text-blue-300 transition-colors"
+                  >
+                    Log in
+                  </Link>
+                </p>
+              )}
             </div>
           </div>
         </div>

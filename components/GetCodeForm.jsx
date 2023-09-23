@@ -4,7 +4,8 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import { codeValidationSchema as validationSchema } from "@/lib/validationSchema";
 import LoadingSpinner from "./LoadingSpinner";
-import CreateCodeSuccessCard from "./CreateCodeSuccessCard";
+import Link from "next/link";
+import StatusCard from "./StatusCard";
 
 const initialValues = {
   amount: 0,
@@ -34,7 +35,7 @@ const GetCodeForm = () => {
           _doc: { code, amountPaid },
         } = await res.json();
         setCode(code);
-        setAmountPaid(amountPaid)
+        setAmountPaid(amountPaid);
       } catch (err) {
         setError(err.code ?? errormessage);
       } finally {
@@ -43,7 +44,30 @@ const GetCodeForm = () => {
     },
   });
 
-  if (code != null) return <CreateCodeSuccessCard code={code} amountPaid={amountPaid} />;
+  if (error) {
+    return (
+      <StatusCard
+        status="error"
+        heading="Unable to add room"
+        message="Please click on Continue to reload and try again"
+      />
+    );
+  }
+
+  if (code != null) {
+    return (
+      <StatusCard
+        status="success"
+        heading="Code created successfully"
+        innerContent=<div className="text-sm text-center">
+          <p className="mb-2 text-white font-medium text-lg">Code: {code}</p>
+          <p className="text-white font-medium text-lg">
+            Amount paid: GHS {amountPaid}
+          </p>
+        </div>
+      />
+    );
+  }
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -105,16 +129,22 @@ const GetCodeForm = () => {
               </div>
               <button
                 type="submit"
-                className="w-[10rem] h-[10rem] rounded-full mx-auto text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex items-center gap-2 justify-center"
+                className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex items-center gap-2 justify-center"
               >
-                {formik.isSubmitting && (
-                  <span>
-                    <LoadingSpinner />
-                  </span>
-                )}
-                <span>Generate code</span>
+                {formik.isSubmitting && <LoadingSpinner />}
+                {formik.isSubmitting ? "Generating code..." : "Generate code"}
               </button>
             </form>
+
+            <p className="block mt-4 text-sm font-medium text-gray-900 dark:text-white">
+              Want to create a room instead? Click{" "}
+              <Link
+                href="/add-room"
+                className="text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                here
+              </Link>
+            </p>
           </div>
         </div>
       </div>
