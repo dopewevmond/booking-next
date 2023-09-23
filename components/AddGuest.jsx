@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import BookingSuccessfulCard from "./BookingSuccessfulCard";
 import { Field, Form, Formik } from "formik";
 import { bookValidationSchema as validationSchema } from "@/lib/validationSchema";
 import { Toast } from "flowbite-react";
 import { HiX } from "react-icons/hi";
+import StatusCard from "./StatusCard";
 
 const AddGuest = () => {
   const [bookedSuccessfully, setBookedSuccessfully] = useState(false);
@@ -12,9 +12,29 @@ const AddGuest = () => {
   const [guestName, setGuestName] = useState(null);
   const [error, setError] = useState(null);
 
-  if (bookedSuccessfully) {
-    return <BookingSuccessfulCard roomnumber={bookedRoom} name={guestName} />;
+  if (error) {
+    return (
+      <StatusCard
+        status="error"
+        heading="Unable to add room"
+        message={error}
+      />
+    );
   }
+
+  if (bookedSuccessfully) {
+    return <StatusCard
+        status="success"
+        heading="Room booked successfully"
+        innerContent=<div className="text-sm text-center">
+          <p className="mb-2 text-white font-medium text-lg">Room: {bookedRoom}</p>
+          <p className="text-white font-medium text-lg">
+            Name of guest: {guestName}
+          </p>
+        </div>
+      />
+  }
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       {error && (
@@ -69,9 +89,6 @@ const AddGuest = () => {
                   setBookedSuccessfully(true);
                 } catch (err) {
                   setError(err.message ?? "Unable to book room");
-                  // setTimeout(() => {
-                  //   if (window) window.location.reload();
-                  // }, 2000);
                 } finally {
                   setSubmitting(false);
                 }
