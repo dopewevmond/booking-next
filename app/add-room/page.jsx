@@ -1,4 +1,4 @@
-import AddRoomForm from "@/components/AddRoom";
+import AddRoomForm from "@/components/AddRoomForm";
 import React from "react";
 import { cookies } from "next/headers";
 import { validateJWT } from "@/lib/auth";

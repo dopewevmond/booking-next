@@ -9,7 +9,7 @@ const ErrorPage = ({ error, reset }) => {
   }, []);
   return (
     <div className="min-h-screen md:flex">
-      <section class="bg-gray-200 dark:bg-gray-900 flex-1 md:min-h-screen flex items-center">
+      <section class="bg-gray-200 dark:bg-gray-900 flex-1 min-h-screen flex items-center">
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
           <div class="mx-auto max-w-screen-sm text-center">
             <h1 class="text-7xl tracking-tight font-extrabold lg:text-9xl text-primary-600 dark:text-primary-500 mb-8">
