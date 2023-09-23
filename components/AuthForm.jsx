@@ -18,7 +18,7 @@ const AuthForm = ({ mode = "login" }) => {
       try {
         if (mode === "login") {
           await handleLogin(values);
-          router.push("/add-room");
+          if (window) window.location.replace('/add-room')
         } else {
           await handleSignup(values);
           router.push("/login");

@@ -13,7 +13,7 @@ export async function POST(req) {
     if (!isadmin) throw new Error('Does not have permissions to create a token')
 
     const { amount, nameofpayer } = await req.json();
-    codeValidationSchema.validate({ amount })
+    codeValidationSchema.validate({ amount, nameofpayer })
 
     let attempts = 0;
     let generatedCode = generateRandomCodeWithNumber();
