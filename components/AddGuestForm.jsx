@@ -13,33 +13,38 @@ const AddGuest = () => {
 
   if (error) {
     return (
-      <StatusCard
-        status="error"
-        heading="Unable to add room"
-        message={error}
-      />
+      <StatusCard status="error" heading="Unable to add room" message={error} />
     );
   }
 
   if (bookedSuccessfully) {
-    return <StatusCard
+    return (
+      <StatusCard
         status="success"
         heading="Room booked successfully"
         innerContent=<div className="text-sm text-center">
-          <p className="mb-2 text-white font-medium text-lg">Room: {bookedRoom}</p>
+          <p className="mb-2 text-white font-medium text-lg">
+            Room: {bookedRoom}
+          </p>
           <p className="text-white font-medium text-lg">
             Name of guest: {guestName}
           </p>
         </div>
       />
+    );
   }
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-16">
-      <div className="w-full max-w-md mx-auto">
-          <Link href="/" className="block mb-4 text-center font-medium text-gray-700 hover:text-gray-500 dark:text-gray-200 hover:dark:text-gray-50">Back to Home</Link>
-        
+        <div className="w-full max-w-md mx-auto">
+          <Link
+            href="/"
+            className="block mb-4 text-center font-medium text-gray-700 hover:text-gray-500 dark:text-gray-200 hover:dark:text-gray-50"
+          >
+            Back to Home
+          </Link>
+
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-4">
@@ -49,6 +54,7 @@ const AddGuest = () => {
               <Formik
                 initialValues={{
                   fullname: "",
+                  dob: "",
                   gender: "",
                   branch: "",
                   code: "",
@@ -58,9 +64,11 @@ const AddGuest = () => {
                   currentlyemployed: "",
                   jobtitle: "",
                   currentplaceofemployment: "",
+                  phonenumber: "",
+                  emailaddress: "",
                 }}
                 validationSchema={validationSchema}
-                onSubmit={async (values, { setSubmitting, resetForm }) => {
+                onSubmit={async (values, { setSubmitting, resetForm, errors }) => {
                   try {
                     const res = await fetch("/api/book", {
                       method: "POST",
@@ -86,14 +94,21 @@ const AddGuest = () => {
                   }
                 }}
               >
-                {({ errors, touched, values, isSubmitting, setSubmitting }) => (
-                  <Form className="w-full max-w-md mx-auto">
+                {({
+                  errors,
+                  touched,
+                  values,
+                  isSubmitting,
+                  setSubmitting,
+                  setFieldValue,
+                }) => (
+                  <Form className="w-full max-w-lg mx-auto">
                     <div className="mb-4">
                       <label
                         htmlFor="code"
                         className="block text-gray-400 font-semibold mb-2"
                       >
-                        Code
+                        Code <span className="text-red-500">*</span>
                       </label>
                       <Field
                         type="text"
@@ -102,7 +117,9 @@ const AddGuest = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                       {errors.code && touched.code && (
-                        <div className="text-red-500">{errors.code}</div>
+                        <div className="text-red-500 text-sm mt-1">
+                          {errors.code}
+                        </div>
                       )}
                     </div>
 
@@ -111,7 +128,7 @@ const AddGuest = () => {
                         htmlFor="fullname"
                         className="block text-gray-400 font-semibold mb-2"
                       >
-                        Full Name
+                        Full Name <span className="text-red-500">*</span>
                       </label>
                       <Field
                         type="text"
@@ -120,13 +137,80 @@ const AddGuest = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                       {errors.fullname && touched.fullname && (
-                        <div className="text-red-500">{errors.fullname}</div>
+                        <div className="text-red-500 text-sm mt-1">
+                          {errors.fullname}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mb-4">
+                      <label
+                        htmlFor="dob"
+                        className="block text-gray-400 font-semibold mb-2"
+                      >
+                        Date of birth{" "}
+                        <span className="text-orange-500">
+                          (month and day only)
+                        </span>
+                        <span className="text-red-500"> *</span>
+                      </label>
+                      <input
+                        type="date"
+                        id="dob"
+                        name="dob"
+                        onChange={(e) => setFieldValue("dob", e.target.value)}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      />
+                      {errors.dob && touched.dob && (
+                        <div className="text-red-500 text-sm mt-1">
+                          {errors.dob}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mb-4">
+                      <label
+                        htmlFor="emailaddress"
+                        className="block text-gray-400 font-semibold mb-2"
+                      >
+                        Email address
+                      </label>
+                      <Field
+                        type="text"
+                        id="emailaddress"
+                        name="emailaddress"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      />
+                      {errors.emailaddress && touched.emailaddress && (
+                        <div className="text-red-500 text-sm mt-1">
+                          {errors.emailaddress}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mb-4">
+                      <label
+                        htmlFor="phonenumber"
+                        className="block text-gray-400 font-semibold mb-2"
+                      >
+                        Phone number <span className="text-red-500">*</span>
+                      </label>
+                      <Field
+                        type="text"
+                        id="phonenumber"
+                        name="phonenumber"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      />
+                      {errors.phonenumber && touched.phonenumber && (
+                        <div className="text-red-500 text-sm mt-1">
+                          {errors.phonenumber}
+                        </div>
                       )}
                     </div>
 
                     <div className="mb-4">
                       <label className="block text-gray-400 font-semibold mb-2">
-                        Gender
+                        Gender <span className="text-red-500">*</span>
                       </label>
                       <div>
                         <label>
@@ -149,7 +233,9 @@ const AddGuest = () => {
                         </label>
                       </div>
                       {errors.gender && touched.gender && (
-                        <div className="text-red-500">{errors.gender}</div>
+                        <div className="text-red-500 text-sm mt-1">
+                          {errors.gender}
+                        </div>
                       )}
                     </div>
 
@@ -158,7 +244,7 @@ const AddGuest = () => {
                         htmlFor="branch"
                         className="block text-gray-400 font-semibold mb-2"
                       >
-                        Branch
+                        Branch <span className="text-red-500">*</span>
                       </label>
                       <Field
                         type="text"
@@ -167,7 +253,9 @@ const AddGuest = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                       {errors.branch && touched.branch && (
-                        <div className="text-red-500">{errors.branch}</div>
+                        <div className="text-red-500 text-sm mt-1">
+                          {errors.branch}
+                        </div>
                       )}
                     </div>
 
@@ -176,7 +264,7 @@ const AddGuest = () => {
                         htmlFor="studentOrAlumni"
                         className="block text-gray-400 font-semibold mb-2"
                       >
-                        Status
+                        Status <span className="text-red-500">*</span>
                       </label>
 
                       <label>
@@ -207,7 +295,7 @@ const AddGuest = () => {
                         <span className="dark:text-gray-100">Associate</span>
                       </label>
                       {errors.studentOrAlumni && touched.studentOrAlumni && (
-                        <div className="text-red-500">
+                        <div className="text-red-500 text-sm mt-1">
                           {errors.studentOrAlumni}
                         </div>
                       )}
@@ -215,7 +303,7 @@ const AddGuest = () => {
 
                     <div className="mb-4">
                       <label className="block text-gray-400 font-semibold mb-2">
-                        Highest Level of Education
+                        Highest Level of Education <span className="text-red-500">*</span>
                       </label>
                       <div>
                         <label>
@@ -252,12 +340,14 @@ const AddGuest = () => {
                             value="postgraduate"
                             className="mr-1"
                           />
-                          <span className="dark:text-gray-100">Postgraduate</span>
+                          <span className="dark:text-gray-100">
+                            Postgraduate
+                          </span>
                         </label>
                       </div>
                       {errors.highestlevelofeducation &&
                         touched.highestlevelofeducation && (
-                          <div className="text-red-500">
+                          <div className="text-red-500 text-sm mt-1">
                             {errors.highestlevelofeducation}
                           </div>
                         )}
@@ -268,7 +358,7 @@ const AddGuest = () => {
                         htmlFor="institution"
                         className="block text-gray-400 font-semibold mb-2"
                       >
-                        Institution
+                        Institution <span className="text-red-500">*</span>
                       </label>
                       <Field
                         type="text"
@@ -277,13 +367,15 @@ const AddGuest = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                       {errors.institution && touched.institution && (
-                        <div className="text-red-500">{errors.institution}</div>
+                        <div className="text-red-500 text-sm mt-1">
+                          {errors.institution}
+                        </div>
                       )}
                     </div>
 
                     <div className="mb-4">
                       <label className="block text-gray-400 font-semibold mb-2">
-                        Currently Employed
+                        Currently Employed <span className="text-red-500">*</span>
                       </label>
                       <div>
                         <label>
@@ -305,11 +397,12 @@ const AddGuest = () => {
                           <span className="dark:text-gray-100">No</span>
                         </label>
                       </div>
-                      {errors.currentlyemployed && touched.currentlyemployed && (
-                        <div className="text-red-500">
-                          {errors.currentlyemployed}
-                        </div>
-                      )}
+                      {errors.currentlyemployed &&
+                        touched.currentlyemployed && (
+                          <div className="text-red-500 text-sm mt-1">
+                            {errors.currentlyemployed}
+                          </div>
+                        )}
                     </div>
 
                     {values.currentlyemployed === "yes" && (
@@ -328,7 +421,9 @@ const AddGuest = () => {
                             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           />
                           {errors.jobtitle && touched.jobtitle && (
-                            <div className="text-red-500">{errors.jobtitle}</div>
+                            <div className="text-red-500 text-sm mt-1">
+                              {errors.jobtitle}
+                            </div>
                           )}
                         </div>
 
@@ -347,7 +442,7 @@ const AddGuest = () => {
                           />
                           {errors.currentplaceofemployment &&
                             touched.currentplaceofemployment && (
-                              <div className="text-red-500">
+                              <div className="text-red-500 text-sm mt-1">
                                 {errors.currentplaceofemployment}
                               </div>
                             )}
@@ -368,7 +463,6 @@ const AddGuest = () => {
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );

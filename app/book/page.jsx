@@ -1,8 +1,8 @@
-import AddGuest from "@/components/AddGuest";
+import AddGuestForm from "@/components/AddGuestForm";
 import React from "react";
 
-const AddGuestForm = () => {
-  return <AddGuest />;
+const AddGuest = () => {
+  return <AddGuestForm />;
 };
 
-export default AddGuestForm;
+export default AddGuest;

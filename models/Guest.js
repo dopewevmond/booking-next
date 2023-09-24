@@ -13,6 +13,9 @@ const GuestSchema = new Schema(
     currentlyEmployed: { type: String, required: false },
     profession: { type: String, required: false },
     currentPlaceOfEmployment: { type: String, required: false },
+    dob: { type: String, required: true },
+    phonenumber: { type: String, required: true },
+    emailaddress: { type: String, required: false }
   },
   {
     timestamps: true,
