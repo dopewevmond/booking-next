@@ -7,10 +7,13 @@ import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { authValidationSchema as validationSchema } from "@/lib/validationSchema";
 import Link from "next/link";
+import SignupSuccessCard from "./SignupSuccessCard";
 
 const AuthForm = ({ mode = "login" }) => {
   const router = useRouter();
   const [error, setError] = useState(null);
+  const [signupSuccessful, setSignupSuccessful] = useState(false);
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -21,7 +24,7 @@ const AuthForm = ({ mode = "login" }) => {
           if (window) window.location.replace('/add-room')
         } else {
           await handleSignup(values);
-          router.push("/login");
+          setSignupSuccessful(true)
         }
       } catch (err) {
         setError(err.message);
@@ -54,6 +57,8 @@ const AuthForm = ({ mode = "login" }) => {
     if (!res.ok) throw new Error("Unable to sign up");
     return res.json();
   };
+
+  if (signupSuccessful) return <SignupSuccessCard />
 
   return (
     <>
