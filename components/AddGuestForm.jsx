@@ -23,10 +23,10 @@ const AddGuest = () => {
         status="success"
         heading="Room booked successfully"
         innerContent=<div className="text-sm text-center">
-          <p className="mb-2 text-white font-medium text-lg">
+          <p className="mb-2 text-gray-800 dark:text-white font-medium text-lg">
             Room: {bookedRoom}
           </p>
-          <p className="text-white font-medium text-lg">
+          <p className="text-gray-800 dark:text-white font-medium text-lg">
             Name of guest: {guestName}
           </p>
         </div>

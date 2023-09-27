@@ -84,8 +84,8 @@ const GetCodeForm = () => {
         status="success"
         heading="Code created successfully"
         innerContent=<div className="text-sm text-center">
-          <p className="mb-2 text-white font-medium text-lg">Code: {code}</p>
-          <p className="text-white font-medium text-lg">
+          <p className="mb-2 text-gray-800 dark:text-white font-medium text-lg">Code: {code}</p>
+          <p className="text-gray-800 dark:text-white font-medium text-lg">
             Amount paid: GHS {amountPaid}
           </p>
         </div>
@@ -127,7 +127,7 @@ const GetCodeForm = () => {
                     name="nameofpayer"
                     id="nameofpayer"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Amount in GHS"
+                    placeholder="Name of payer"
                     required=""
                   />
                   {formik.errors.nameofpayer && (
