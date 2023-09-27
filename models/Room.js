@@ -1,6 +1,6 @@
-import { model, Schema } from "mongoose";
 import { connectToDB } from "@/lib/connect";
 const mongoose = await connectToDB();
+import { model, Schema } from "mongoose";
 
 const RoomSchema = new Schema(
   {
@@ -13,5 +13,9 @@ const RoomSchema = new Schema(
     timestamps: true,
   }
 );
+
+RoomSchema.methods.populateGuests = function () {
+  return this.populate("guests");
+};
 
 export default mongoose.models.Room || model("Room", RoomSchema);

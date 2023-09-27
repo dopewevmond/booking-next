@@ -1,6 +1,6 @@
-import { model, Schema } from "mongoose";
 import { connectToDB } from "@/lib/connect";
 const mongoose = await connectToDB()
+import { model, Schema } from "mongoose";
 
 const PaymentCodeSchema = new Schema(
   {

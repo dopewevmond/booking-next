@@ -6,6 +6,7 @@ import { codeValidationSchema as validationSchema } from "@/lib/validationSchema
 import LoadingSpinner from "./LoadingSpinner";
 import Link from "next/link";
 import StatusCard from "./StatusCard";
+import BackToHomeButton from "./BackToHomeButton";
 
 const initialValues = {
   amount: 0,
@@ -97,12 +98,9 @@ const GetCodeForm = () => {
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
         <div className="w-full max-w-md mx-auto">
-          <Link
-            href="/"
-            className="block mb-4 text-center font-medium text-gray-700 hover:text-gray-500 dark:text-gray-200 hover:dark:text-gray-50"
-          >
-            Back to Home
-          </Link>
+        <div className="mb-4 flex justify-center">
+            <BackToHomeButton />
+          </div>
 
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

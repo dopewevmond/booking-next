@@ -5,6 +5,7 @@ import { roomValidationSchema as validationSchema } from "@/lib/validationSchema
 import LoadingSpinner from "./LoadingSpinner";
 import StatusCard from "./StatusCard";
 import Link from "next/link";
+import BackToHomeButton from "./BackToHomeButton";
 
 const AddRoomForm = () => {
   const [error, setError] = useState(null);
@@ -83,12 +84,9 @@ const AddRoomForm = () => {
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
         <div className="w-full max-w-md mx-auto">
-          <Link
-            href="/"
-            className="block mb-4 text-center font-medium text-gray-700 hover:text-gray-500 dark:text-gray-200 hover:dark:text-gray-50"
-          >
-            Back to Home
-          </Link>
+          <div className="mb-4 flex justify-center">
+            <BackToHomeButton />
+          </div>
 
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 sm:p-8">
@@ -202,6 +200,13 @@ const AddRoomForm = () => {
             </div>
           </div>
 
+          <Link
+            href='/rooms'
+            className="flex items-center justify-center mx-auto text-sm mt-4 text-center font-medium transition-colors text-cyan-950 hover:text-cyan-700 py-2 px-4 border border-solid border-cyan-500 bg-cyan-400 hover:bg-cyan-300 rounded-lg"
+          >
+           Rooms
+          </Link>
+          
           <button
             onClick={logout}
             className="flex items-center justify-center mx-auto text-sm mt-4 text-center font-medium transition-colors text-red-950 hover:text-red-700 py-2 px-4 border border-solid border-red-500 bg-red-400 hover:bg-red-300 rounded-lg"
