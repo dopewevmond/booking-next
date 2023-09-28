@@ -6,6 +6,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import StatusCard from "./StatusCard";
 import Link from "next/link";
 import BackToHomeButton from "./BackToHomeButton";
+import MiniButtonNav from "./MiniButtonNav";
 
 const AddRoomForm = () => {
   const [error, setError] = useState(null);
@@ -200,12 +201,7 @@ const AddRoomForm = () => {
             </div>
           </div>
 
-          <Link
-            href='/rooms'
-            className="flex items-center justify-center mx-auto text-sm mt-4 text-center font-medium transition-colors text-cyan-950 hover:text-cyan-700 py-2 px-4 border border-solid border-cyan-500 bg-cyan-400 hover:bg-cyan-300 rounded-lg"
-          >
-           Rooms
-          </Link>
+          <MiniButtonNav />
           
           <button
             onClick={logout}

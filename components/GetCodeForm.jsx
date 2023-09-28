@@ -7,6 +7,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import Link from "next/link";
 import StatusCard from "./StatusCard";
 import BackToHomeButton from "./BackToHomeButton";
+import MiniButtonNav from "./MiniButtonNav";
 
 const initialValues = {
   amount: 0,
@@ -177,6 +178,8 @@ const GetCodeForm = () => {
               </p>
             </div>
           </div>
+
+          <MiniButtonNav />
 
           <button
             onClick={logout}
